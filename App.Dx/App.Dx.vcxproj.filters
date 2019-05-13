@@ -7,6 +7,9 @@
     <Filter Include="src\App">
       <UniqueIdentifier>{9da9770c-39c2-4a5c-93fc-876f402f895c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Settings">
+      <UniqueIdentifier>{b664633c-6c5a-49de-99b4-a3f6095c8127}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -25,6 +28,9 @@
     </ClInclude>
     <ClInclude Include="App.h">
       <Filter>src\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Settings.h">
+      <Filter>src\Settings</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
