@@ -30,11 +30,16 @@ void App::initialize()
   createInputDevice();
   showWindow();
 
+  createViewModel();
+  resetViewModel();
+
   d_stopSignal = false;
 }
 
 void App::dispose()
 {
+  disposeViewModel();
+
   disposeInputDevice();
   disposeRenderer2d();
   unloadResourceController();
@@ -57,6 +62,7 @@ void App::mainloop()
     d_renderDevice->beginScene();
     d_renderer2d->beginScene();
 
+    d_viewModel->render(*d_renderer2d);
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
     d_renderer2d->endScene();
@@ -170,3 +176,19 @@ void App::disposeRenderer2d()
   d_renderer2d.reset();
 }
 
+
+void App::createViewModel()
+{
+  CONTRACT_EXPECT(d_resourceController);
+  d_viewModel = std::make_shared<ViewModel>(*d_resourceController);
+}
+
+void App::resetViewModel()
+{
+  d_viewModel->createInitial();
+}
+
+void App::disposeViewModel()
+{
+  d_viewModel.reset();
+}

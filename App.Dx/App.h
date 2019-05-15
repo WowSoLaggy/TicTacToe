@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ViewModel.h"
+
 #include <LaggyDx/LaggyDxFwd.h>
 #include <LaggySdk/SdkFwd.h>
 #include <LaggySdk/Timer.h>
@@ -40,6 +42,11 @@ private:
   std::shared_ptr<Dx::IRenderer2d> d_renderer2d;
   void createRenderer2d();
   void disposeRenderer2d();
+
+  std::shared_ptr<ViewModel> d_viewModel;
+  void createViewModel();
+  void resetViewModel();
+  void disposeViewModel();
 
   Sdk::Timer d_timer;
 };
