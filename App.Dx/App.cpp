@@ -5,6 +5,9 @@
 
 #include <LaggyDx/IInputDevice.h>
 #include <LaggyDx/IRenderDevice.h>
+#include <LaggyDx/IRenderer2d.h>
+#include <LaggyDx/IResourceController.h>
+#include <LaggySdk/Contracts.h>
 #include <LaggySdk/HandleMessages.h>
 #include <LaggySdk/Window.h>
 
@@ -21,6 +24,9 @@ void App::initialize()
 {
   createWindow();
   createRenderDevice();
+  createResourceController();
+  loadResourceController();
+  createRenderer2d();
   createInputDevice();
   showWindow();
 
@@ -30,6 +36,9 @@ void App::initialize()
 void App::dispose()
 {
   disposeInputDevice();
+  disposeRenderer2d();
+  unloadResourceController();
+  disposeResourceController();
   disposeRenderDevice();
   disposeWindow();
 }
@@ -43,8 +52,14 @@ void App::mainloop()
   {
     dt = d_timer.restart();
 
+    CONTRACT_EXPECT(d_renderDevice);
+    CONTRACT_EXPECT(d_renderer2d);
     d_renderDevice->beginScene();
+    d_renderer2d->beginScene();
+
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
+
+    d_renderer2d->endScene();
     d_renderDevice->endScene();
   }
 }
@@ -53,16 +68,19 @@ void App::mainloop()
 void App::createWindow()
 {
   d_window = std::make_shared<Sdk::Window>();
+  CONTRACT_ENSURE(d_window);
   d_window->create(WindowWidth, WindowHeight, ApplicationName);
 }
 
 void App::showWindow()
 {
+  CONTRACT_EXPECT(d_window);
   d_window->show();
 }
 
 void App::disposeWindow()
 {
+  CONTRACT_EXPECT(d_window);
   d_window->dispose();
   d_window.reset();
 }
@@ -70,6 +88,7 @@ void App::disposeWindow()
 
 bool App::stopMainloop()
 {
+  CONTRACT_EXPECT(d_inputDevice);
   if (!Sdk::handleMessages(std::bind(&Dx::IInputDevice::processMessage, std::ref(*d_inputDevice), std::placeholders::_1)))
     return true;
 
@@ -80,11 +99,13 @@ bool App::stopMainloop()
 void App::createInputDevice()
 {
   d_inputDevice = Dx::IInputDevice::create();
+  CONTRACT_ENSURE(d_inputDevice);
   d_inputDevice->initialize();
 }
 
 void App::disposeInputDevice()
 {
+  CONTRACT_EXPECT(d_inputDevice);
   d_inputDevice->dispose();
   d_inputDevice.reset();
 }
@@ -93,11 +114,59 @@ void App::disposeInputDevice()
 void App::createRenderDevice()
 {
   d_renderDevice = Dx::IRenderDevice::create();
+  CONTRACT_ENSURE(d_renderDevice);
+
   d_renderDevice->initialize(d_window->getHWnd(), WindowWidth, WindowHeight);
+  CONTRACT_ENSURE(d_renderDevice->isInitialized());
 }
 
 void App::disposeRenderDevice()
 {
+  CONTRACT_EXPECT(d_renderDevice);
   d_renderDevice->dispose();
   d_renderDevice.reset();
 }
+
+
+void App::createResourceController()
+{
+  d_resourceController = Dx::IResourceController::create();
+  CONTRACT_ENSURE(d_resourceController);
+  d_resourceController->initialize(ResourceFolder);
+}
+
+void App::loadResourceController()
+{
+  CONTRACT_EXPECT(d_renderDevice);
+  CONTRACT_EXPECT(d_renderDevice->isInitialized());
+  CONTRACT_EXPECT(d_resourceController);
+  d_resourceController->loadResources(*d_renderDevice);
+}
+
+void App::unloadResourceController()
+{
+  CONTRACT_EXPECT(d_resourceController);
+  d_resourceController->unloadResources();
+}
+
+void App::disposeResourceController()
+{
+  CONTRACT_EXPECT(d_resourceController);
+  d_resourceController->dispose();
+  d_resourceController.reset();
+}
+
+
+void App::createRenderer2d()
+{
+  CONTRACT_EXPECT(d_renderDevice);
+  CONTRACT_EXPECT(d_resourceController);
+  d_renderer2d = Dx::IRenderer2d::create(*d_renderDevice, *d_resourceController);
+  CONTRACT_ENSURE(d_renderer2d);
+}
+
+void App::disposeRenderer2d()
+{
+  d_renderer2d.reset();
+}
+

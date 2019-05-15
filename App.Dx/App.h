@@ -31,5 +31,15 @@ private:
   void createRenderDevice();
   void disposeRenderDevice();
 
+  std::shared_ptr<Dx::IResourceController> d_resourceController;
+  void createResourceController();
+  void loadResourceController();
+  void unloadResourceController();
+  void disposeResourceController();
+
+  std::shared_ptr<Dx::IRenderer2d> d_renderer2d;
+  void createRenderer2d();
+  void disposeRenderer2d();
+
   Sdk::Timer d_timer;
 };
