@@ -205,7 +205,8 @@ void App::disposeModel()
 void App::createViewModel()
 {
   CONTRACT_EXPECT(d_resourceController);
-  d_viewModel = std::make_shared<ViewModel>(*d_resourceController);
+  CONTRACT_EXPECT(d_gameField);
+  d_viewModel = std::make_shared<ViewModel>(*d_resourceController, *d_gameField);
 }
 
 void App::resetViewModel()

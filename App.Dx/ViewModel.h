@@ -1,5 +1,7 @@
 #pragma once
 
+#include <TicTacToe/TicTacToeFwd.h>
+
 #include <LaggyDx/LaggyDxFwd.h>
 #include <LaggyDx/Sprite.h>
 
@@ -7,7 +9,7 @@
 class ViewModel
 {
 public:
-  ViewModel(const Dx::IResourceController& i_resourceController);
+  ViewModel(const Dx::IResourceController& i_resourceController, const GameField& i_gameField);
 
   void createInitial();
 
@@ -15,7 +17,8 @@ public:
 
 private:
   const Dx::IResourceController& d_resourceController;
+  const GameField& d_gameField;
 
-  Dx::Sprite d_background;
-  Dx::Sprite d_field;
+  Dx::Sprite d_spriteBackground;
+  Dx::Sprite d_spriteField;
 };
