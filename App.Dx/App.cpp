@@ -3,6 +3,8 @@
 
 #include "Settings.h"
 
+#include <TicTacToe/GameField.h>
+
 #include <LaggyDx/IInputDevice.h>
 #include <LaggyDx/IRenderDevice.h>
 #include <LaggyDx/IRenderer2d.h>
@@ -30,6 +32,9 @@ void App::initialize()
   createInputDevice();
   showWindow();
 
+  createModel();
+  resetModel();
+
   createViewModel();
   resetViewModel();
 
@@ -39,6 +44,8 @@ void App::initialize()
 void App::dispose()
 {
   disposeViewModel();
+
+  disposeModel();
 
   disposeInputDevice();
   disposeRenderer2d();
@@ -174,6 +181,24 @@ void App::createRenderer2d()
 void App::disposeRenderer2d()
 {
   d_renderer2d.reset();
+}
+
+
+void App::createModel()
+{
+  d_gameField = std::make_shared<GameField>();
+  CONTRACT_ENSURE(d_gameField);
+}
+
+void App::resetModel()
+{
+  CONTRACT_EXPECT(d_gameField);
+  d_gameField->resetFields();
+}
+
+void App::disposeModel()
+{
+  d_gameField.reset();
 }
 
 
