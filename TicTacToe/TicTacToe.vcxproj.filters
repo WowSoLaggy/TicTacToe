@@ -23,5 +23,8 @@
     <ClInclude Include="GameField.h">
       <Filter>src\Model</Filter>
     </ClInclude>
+    <ClInclude Include="TicTacToeFwd.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
