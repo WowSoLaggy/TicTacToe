@@ -68,7 +68,8 @@ void App::mainloop()
     CONTRACT_EXPECT(d_renderDevice);
     CONTRACT_EXPECT(d_renderer2d);
 
-    handleInput(d_inputDevice->check());
+    handleKeyboard(d_inputDevice->checkKeyboard());
+    handleMouse(d_inputDevice->checkMouse());
 
     d_renderDevice->beginScene();
     d_renderer2d->beginScene();
@@ -198,6 +199,8 @@ void App::resetModel()
 {
   CONTRACT_EXPECT(d_gameField);
   d_gameField->resetFields();
+
+  d_isPlayerTurn = true;
 }
 
 void App::disposeModel()
@@ -216,6 +219,7 @@ void App::createViewModel()
 void App::resetViewModel()
 {
   d_viewModel->createInitial();
+  d_viewModel->setTurn(d_isPlayerTurn);
 }
 
 void App::disposeViewModel()

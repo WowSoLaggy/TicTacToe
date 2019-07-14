@@ -15,6 +15,10 @@ public:
   void run();
 
 private:
+  bool d_isPlayerTurn;
+
+  Sdk::Timer d_timer;
+
   bool d_stopSignal;
   bool stopMainloop();
 
@@ -30,7 +34,8 @@ private:
   std::shared_ptr<Dx::IInputDevice> d_inputDevice;
   void createInputDevice();
   void disposeInputDevice();
-  void handleInput(const Dx::KeyboardState& i_keyboardState);
+  void handleKeyboard(const Dx::KeyboardState& i_keyboardState);
+  void handleMouse(const Dx::MouseState& i_mouseState);
 
   std::shared_ptr<Dx::IRenderDevice> d_renderDevice;
   void createRenderDevice();
@@ -55,6 +60,4 @@ private:
   void createViewModel();
   void resetViewModel();
   void disposeViewModel();
-
-  Sdk::Timer d_timer;
 };

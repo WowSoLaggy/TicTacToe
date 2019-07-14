@@ -41,6 +41,8 @@ void ViewModel::createInitial()
     { GameFieldOffset, GameFieldOffset },
     getSize(d_resourceController, gameFieldResourceId)
   };
+
+  d_fontId = d_resourceController.getResourceId("MyFont.spritefont");
 }
 
 
@@ -48,4 +50,18 @@ void ViewModel::render(Dx::IRenderer2d& i_renderer) const
 {
   i_renderer.renderSprite(d_spriteBackground);
   i_renderer.renderSprite(d_spriteField);
+  i_renderer.renderText(d_turnString, d_fontId, { 470, 50 });
+  i_renderer.renderText(d_debugString, d_fontId, { 0, 0 });
+}
+
+
+void ViewModel::setDebugString(std::string i_debugString)
+{
+  d_debugString = std::move(i_debugString);
+}
+
+void ViewModel::setTurn(bool i_isPlayerTurn)
+{
+  d_isPlayerTurn = i_isPlayerTurn;
+  d_turnString = d_isPlayerTurn ? "Player turn" : "Mighty AI turn";
 }

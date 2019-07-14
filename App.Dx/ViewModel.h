@@ -15,10 +15,20 @@ public:
 
   void render(Dx::IRenderer2d& i_renderer) const;
 
+  void setDebugString(std::string i_debugString);
+  void setTurn(bool i_isPlayerTurn);
+
 private:
+  std::string d_debugString;
+
+  bool d_isPlayerTurn;
+  std::string d_turnString;
+
   const Dx::IResourceController& d_resourceController;
   const GameField& d_gameField;
 
   Dx::Sprite d_spriteBackground;
   Dx::Sprite d_spriteField;
+
+  Dx::ResourceId d_fontId;
 };
