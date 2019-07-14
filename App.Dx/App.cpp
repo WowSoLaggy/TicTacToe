@@ -64,8 +64,12 @@ void App::mainloop()
   {
     dt = d_timer.restart();
 
+    CONTRACT_EXPECT(d_inputDevice);
     CONTRACT_EXPECT(d_renderDevice);
     CONTRACT_EXPECT(d_renderer2d);
+
+    handleInput(d_inputDevice->check());
+
     d_renderDevice->beginScene();
     d_renderer2d->beginScene();
 

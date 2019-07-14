@@ -27,6 +27,9 @@
     <ClCompile Include="ViewModel.cpp">
       <Filter>src\SpriteCollection</Filter>
     </ClCompile>
+    <ClCompile Include="App_input.cpp">
+      <Filter>src\App</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">

@@ -139,6 +139,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="App_input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ViewModel.cpp" />
     <ClCompile Include="stdafx.cpp">

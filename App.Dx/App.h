@@ -30,6 +30,7 @@ private:
   std::shared_ptr<Dx::IInputDevice> d_inputDevice;
   void createInputDevice();
   void disposeInputDevice();
+  void handleInput(const Dx::KeyboardState& i_keyboardState);
 
   std::shared_ptr<Dx::IRenderDevice> d_renderDevice;
   void createRenderDevice();
