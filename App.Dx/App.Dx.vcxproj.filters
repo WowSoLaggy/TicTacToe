@@ -10,7 +10,7 @@
     <Filter Include="src\Settings">
       <UniqueIdentifier>{b664633c-6c5a-49de-99b4-a3f6095c8127}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\SpriteCollection">
+    <Filter Include="src\ViewModel">
       <UniqueIdentifier>{7c74be48-a8e7-4dda-9460-9255d11b5a5d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -25,7 +25,7 @@
       <Filter>src\App</Filter>
     </ClCompile>
     <ClCompile Include="ViewModel.cpp">
-      <Filter>src\SpriteCollection</Filter>
+      <Filter>src\ViewModel</Filter>
     </ClCompile>
     <ClCompile Include="App_input.cpp">
       <Filter>src\App</Filter>
@@ -42,7 +42,7 @@
       <Filter>src\Settings</Filter>
     </ClInclude>
     <ClInclude Include="ViewModel.h">
-      <Filter>src\SpriteCollection</Filter>
+      <Filter>src\ViewModel</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
