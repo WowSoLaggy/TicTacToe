@@ -8,7 +8,7 @@ namespace
 {
   void checkIndexIsCorrect(int i_idx, const GameField& i_gameField)
   {
-    CONTRACT_EXPECT(0 <= i_idx && i_idx <= i_gameField.FieldSize);
+    CONTRACT_EXPECT(0 <= i_idx && i_idx < i_gameField.FieldSize);
   }
 
 } // anonymous NS
