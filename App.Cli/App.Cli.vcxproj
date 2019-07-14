@@ -149,6 +149,9 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\LaggySdk\LaggySdk\LaggySdk.vcxproj">
+      <Project>{26f606c5-4239-49f0-b3d4-c358526c2325}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\TicTacToe\TicTacToe.vcxproj">
       <Project>{134a3e87-fad1-4838-a5da-ed7a1e4b6d92}</Project>
     </ProjectReference>

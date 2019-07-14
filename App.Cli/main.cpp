@@ -1,3 +1,4 @@
+#include <LaggySdk/Random.h>
 #include <TicTacToe/GameField.h>
 
 #include <chrono>
@@ -110,7 +111,7 @@ int getIndexForAiTurn(const GameField& i_gameField)
 
 int main()
 {
-  std::srand((unsigned int)time(nullptr));
+  Sdk::randomize();
 
   GameField gameField;
 
