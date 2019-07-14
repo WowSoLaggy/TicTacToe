@@ -9,8 +9,10 @@
 #include <LaggyDx/IRenderDevice.h>
 #include <LaggyDx/IRenderer2d.h>
 #include <LaggyDx/IResourceController.h>
+#include <LaggyDx/MouseState.h>
 #include <LaggySdk/Contracts.h>
 #include <LaggySdk/HandleMessages.h>
+#include <LaggySdk/Random.h>
 #include <LaggySdk/Window.h>
 
 
@@ -24,6 +26,8 @@ void App::run()
 
 void App::initialize()
 {
+  Sdk::randomize();
+
   createWindow();
   createRenderDevice();
   createResourceController();
@@ -68,13 +72,17 @@ void App::mainloop()
     CONTRACT_EXPECT(d_renderDevice);
     CONTRACT_EXPECT(d_renderer2d);
 
-    handleKeyboard(d_inputDevice->checkKeyboard());
-    handleMouse(d_inputDevice->checkMouse());
+    const auto& keyboardState = d_inputDevice->checkKeyboard();
+    handleKeyboard(keyboardState);
+    const auto& mouseState = d_inputDevice->checkMouse();
+    handleMouse(mouseState);
+
+    checkLogic(dt);
 
     d_renderDevice->beginScene();
     d_renderer2d->beginScene();
 
-    d_viewModel->render(*d_renderer2d);
+    d_viewModel->render(*d_renderer2d, mouseState.getMousePosition());
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
     d_renderer2d->endScene();

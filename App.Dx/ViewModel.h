@@ -13,14 +13,11 @@ public:
 
   void createInitial();
 
-  void render(Dx::IRenderer2d& i_renderer) const;
+  void render(Dx::IRenderer2d& i_renderer, const Dx::MousePosition& i_mousePosition) const;
 
-  void setDebugString(std::string i_debugString);
   void setTurn(bool i_isPlayerTurn);
 
 private:
-  std::string d_debugString;
-
   bool d_isPlayerTurn;
   std::string d_turnString;
 
@@ -31,4 +28,9 @@ private:
   Dx::Sprite d_spriteField;
 
   Dx::ResourceId d_fontId;
+
+  Dx::ResourceId d_ticId;
+  Dx::ResourceId d_tacId;
+  Sdk::Vector2 d_ticSize;
+  Sdk::Vector2 d_tacSize;
 };

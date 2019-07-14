@@ -1,12 +1,15 @@
 #include "stdafx.h"
 #include "ViewModel.h"
 
+#include "FieldPositions.h"
 #include "Settings.h"
 
 #include <LaggyDx/IRenderer2d.h>
+#include <LaggyDx/MouseState.h>
 #include <LaggyDx/ResourceController.h>
 #include <LaggyDx/TextureResource.h>
 #include <LaggySdk/Vector.h>
+#include <TicTacToe/GameField.h>
 
 
 namespace
@@ -43,22 +46,59 @@ void ViewModel::createInitial()
   };
 
   d_fontId = d_resourceController.getResourceId("MyFont.spritefont");
+
+  d_ticId = d_resourceController.getResourceId("Tic.dds");
+  d_tacId = d_resourceController.getResourceId("Tac.dds");
+
+  d_ticSize = getSize(d_resourceController, d_ticId);
+  d_tacSize = getSize(d_resourceController, d_tacId);
 }
 
 
-void ViewModel::render(Dx::IRenderer2d& i_renderer) const
+void ViewModel::render(Dx::IRenderer2d& i_renderer, const Dx::MousePosition& i_mousePosition) const
 {
+  // BACKGROUND
+
   i_renderer.renderSprite(d_spriteBackground);
   i_renderer.renderSprite(d_spriteField);
+
+  // OCCUPIED FIELDS
+
+  auto drawField = [&](int i_idx, bool i_cross)
+  {
+    i_renderer.renderSprite({
+      i_cross ? d_tacId : d_ticId,
+      getIndexOffset(i_idx),
+      i_cross ? d_tacSize : d_ticSize });
+  };
+
+  for (int idx = 0; idx < d_gameField.FieldSize; ++idx)
+  {
+    const auto fieldState = d_gameField.getFieldState(idx);
+    if (fieldState != FieldState::Unoccupied)
+      drawField(idx, fieldState == FieldState::Cross);
+  }
+
+  // SELECTED FIELD
+
+  if (d_isPlayerTurn)
+  {
+    const int fieldIndex = getFieldIndex(i_mousePosition.x, i_mousePosition.y);
+    if (fieldIndex != -1 && d_gameField.isFieldUnoccupied(fieldIndex))
+      drawField(fieldIndex, true);
+  }
+
   i_renderer.renderText(d_turnString, d_fontId, { 470, 50 });
-  i_renderer.renderText(d_debugString, d_fontId, { 0, 0 });
+
+  // DEBUG
+
+  /*const std::string debugString =
+    std::to_string(i_mousePosition.x) + ", " +
+    std::to_string(i_mousePosition.y) + " (" +
+    std::to_string(fieldIndex) + ")";
+  i_renderer.renderText(debugString, d_fontId, { 0, 0 });*/
 }
 
-
-void ViewModel::setDebugString(std::string i_debugString)
-{
-  d_debugString = std::move(i_debugString);
-}
 
 void ViewModel::setTurn(bool i_isPlayerTurn)
 {

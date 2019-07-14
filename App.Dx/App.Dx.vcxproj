@@ -140,6 +140,8 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="App_input.cpp" />
+    <ClCompile Include="App_logic.cpp" />
+    <ClCompile Include="FieldPositions.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ViewModel.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -151,6 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="FieldPositions.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="ViewModel.h" />
     <ClInclude Include="stdafx.h" />

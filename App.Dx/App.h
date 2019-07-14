@@ -16,6 +16,9 @@ public:
 
 private:
   bool d_isPlayerTurn;
+  double d_aiTurnTime;
+  void setTurn(bool i_isPlayerTurn);
+  void checkLogic(double i_dt);
 
   Sdk::Timer d_timer;
 
