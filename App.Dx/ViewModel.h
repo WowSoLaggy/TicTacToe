@@ -1,6 +1,6 @@
 #pragma once
 
-#include <TicTacToe/TicTacToeFwd.h>
+#include <TicTacToe/GameField.h>
 
 #include <LaggyDx/LaggyDxFwd.h>
 #include <LaggyDx/Sprite.h>
@@ -16,11 +16,15 @@ public:
   void render(Dx::IRenderer2d& i_renderer, const Dx::MousePosition& i_mousePosition) const;
 
   void setTurn(bool i_isPlayerTurn);
+  void setWinState(WinState i_winState);
+  void setScore(int i_scorePlayer, int i_scoreAi);
 
 private:
   bool d_isPlayerTurn;
-  std::string d_turnString;
-
+  WinState d_winState;
+  std::string d_statusString;
+  std::string d_scoreString;
+  
   const Dx::IResourceController& d_resourceController;
   const GameField& d_gameField;
 

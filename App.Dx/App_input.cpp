@@ -31,6 +31,7 @@ void App::handleMouse(const Dx::MouseState& i_mouseState)
       {
         d_gameField->setFieldState(fieldIndex, FieldState::Cross);
         setTurn(false);
+        checkVictory();
       }
     }
   }

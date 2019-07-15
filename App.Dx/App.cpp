@@ -43,6 +43,8 @@ void App::initialize()
   resetViewModel();
 
   d_stopSignal = false;
+  d_scorePlayer = 0;
+  d_scoreAi = 0;
 }
 
 void App::dispose()
@@ -209,6 +211,7 @@ void App::resetModel()
   d_gameField->resetFields();
 
   d_isPlayerTurn = true;
+  d_winState = WinState::NoWinner;
 }
 
 void App::disposeModel()
@@ -228,6 +231,8 @@ void App::resetViewModel()
 {
   d_viewModel->createInitial();
   d_viewModel->setTurn(d_isPlayerTurn);
+  d_viewModel->setWinState(d_winState);
+  d_viewModel->setScore(d_scorePlayer, d_scoreAi);
 }
 
 void App::disposeViewModel()

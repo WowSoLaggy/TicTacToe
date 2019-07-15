@@ -16,9 +16,16 @@ public:
 
 private:
   bool d_isPlayerTurn;
+  int d_scorePlayer;
+  int d_scoreAi;
   double d_aiTurnTime;
+  double d_victoryTime;
+  WinState d_winState = WinState::NoWinner;
   void setTurn(bool i_isPlayerTurn);
+  void setWinState(WinState i_winState);
   void checkLogic(double i_dt);
+  void checkVictory();
+  void startNewGame();
 
   Sdk::Timer d_timer;
 

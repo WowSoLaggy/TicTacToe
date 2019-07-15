@@ -9,7 +9,6 @@
 #include <LaggyDx/ResourceController.h>
 #include <LaggyDx/TextureResource.h>
 #include <LaggySdk/Vector.h>
-#include <TicTacToe/GameField.h>
 
 
 namespace
@@ -81,14 +80,20 @@ void ViewModel::render(Dx::IRenderer2d& i_renderer, const Dx::MousePosition& i_m
 
   // SELECTED FIELD
 
-  if (d_isPlayerTurn)
+  if (d_isPlayerTurn && d_winState == WinState::NoWinner)
   {
     const int fieldIndex = getFieldIndex(i_mousePosition.x, i_mousePosition.y);
     if (fieldIndex != -1 && d_gameField.isFieldUnoccupied(fieldIndex))
       drawField(fieldIndex, true);
   }
 
-  i_renderer.renderText(d_turnString, d_fontId, { 470, 50 });
+  // GAME STATUS
+
+  i_renderer.renderText(d_statusString, d_fontId, { 460, 50 });
+  
+  // GAME SCORE
+  
+  i_renderer.renderText(d_scoreString, d_fontId, { 460, 105 });
 
   // DEBUG
 
@@ -103,5 +108,21 @@ void ViewModel::render(Dx::IRenderer2d& i_renderer, const Dx::MousePosition& i_m
 void ViewModel::setTurn(bool i_isPlayerTurn)
 {
   d_isPlayerTurn = i_isPlayerTurn;
-  d_turnString = d_isPlayerTurn ? "Player turn" : "Mighty AI turn";
+  d_statusString = d_isPlayerTurn ? "Player turn" : "Mighty AI turn...";
+}
+
+void ViewModel::setWinState(WinState i_winState)
+{
+  d_winState = i_winState;
+  if (d_winState == WinState::Draw)
+    d_statusString = "Draw...";
+  else if (d_winState == WinState::WinnerCross)
+    d_statusString = "You win!";
+  else if (d_winState == WinState::WinnerToe)
+    d_statusString = "Mighty AI win.";
+}
+
+void ViewModel::setScore(int i_scorePlayer, int i_scoreAi)
+{
+  d_scoreString = "Score:\n    You: " + std::to_string(i_scorePlayer) + "\n    AI: " + std::to_string(i_scoreAi);
 }
