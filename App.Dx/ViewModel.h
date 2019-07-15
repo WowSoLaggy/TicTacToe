@@ -31,6 +31,8 @@ private:
   Dx::Sprite d_spriteBackground;
   Dx::Sprite d_spriteField;
 
+  Dx::ResourceId d_cursorId;
+  Sdk::Vector2 d_cursorSize;
   Dx::ResourceId d_fontId;
 
   Dx::ResourceId d_ticId;

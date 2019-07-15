@@ -44,6 +44,9 @@ void ViewModel::createInitial()
     getSize(d_resourceController, gameFieldResourceId)
   };
 
+  d_cursorId = d_resourceController.getResourceId("Cursor.dds");
+  d_cursorSize = getSize(d_resourceController, d_cursorId);
+
   d_fontId = d_resourceController.getResourceId("MyFont.spritefont");
 
   d_ticId = d_resourceController.getResourceId("Tic.dds");
@@ -95,6 +98,10 @@ void ViewModel::render(Dx::IRenderer2d& i_renderer, const Dx::MousePosition& i_m
   
   i_renderer.renderText(d_scoreString, d_fontId, { 460, 105 });
 
+  // CURSOR
+
+  i_renderer.renderSprite({ d_cursorId, { (float)i_mousePosition.x, (float)i_mousePosition.y }, d_cursorSize });
+
   // DEBUG
 
   /*const std::string debugString =
@@ -119,7 +126,7 @@ void ViewModel::setWinState(WinState i_winState)
   else if (d_winState == WinState::WinnerCross)
     d_statusString = "You win!";
   else if (d_winState == WinState::WinnerToe)
-    d_statusString = "Mighty AI win.";
+    d_statusString = "Mighty AI wins.";
 }
 
 void ViewModel::setScore(int i_scorePlayer, int i_scoreAi)
