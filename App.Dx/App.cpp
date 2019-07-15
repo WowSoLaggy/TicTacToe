@@ -128,7 +128,8 @@ void App::createInputDevice()
 {
   d_inputDevice = Dx::IInputDevice::create();
   CONTRACT_ENSURE(d_inputDevice);
-  d_inputDevice->initialize();
+  d_inputDevice->initialize(d_window->getHWnd());
+  setCursorToCenter();
 }
 
 void App::disposeInputDevice()
@@ -238,4 +239,12 @@ void App::resetViewModel()
 void App::disposeViewModel()
 {
   d_viewModel.reset();
+}
+
+
+void App::setCursorToCenter()
+{
+  int posX = GetSystemMetrics(SM_CXSCREEN) / 2;
+  int posY = GetSystemMetrics(SM_CYSCREEN) / 2;
+  SetCursorPos(posX, posY);
 }

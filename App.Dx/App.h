@@ -70,4 +70,6 @@ private:
   void createViewModel();
   void resetViewModel();
   void disposeViewModel();
+
+  void setCursorToCenter();
 };
