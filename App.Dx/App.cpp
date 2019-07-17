@@ -28,23 +28,27 @@ void App::initialize()
 {
   Sdk::randomize();
 
-  createWindow();
-  createRenderDevice();
-  createResourceController();
-  loadResourceController();
-  createRenderer2d();
-  createInputDevice();
-  showWindow();
+  d_window = std::make_unique<Sdk::Window>(WindowWidth, WindowHeight, ApplicationName);
+  d_renderDevice = Dx::IRenderDevice::create(d_window->getHWnd(), WindowWidth, WindowHeight);
+  d_resourceController = Dx::IResourceController::create(ResourceFolder);
 
-  createModel();
+  loadResourceController();
+  
+  d_renderer2d = Dx::IRenderer2d::create(*d_renderDevice, *d_resourceController);
+  d_inputDevice = Dx::IInputDevice::create(d_window->getHWnd());
+
+  d_gameField = std::make_unique<GameField>();
   resetModel();
 
-  createViewModel();
+  d_viewModel = std::make_unique<ViewModel>(*d_resourceController, *d_gameField);
   resetViewModel();
 
   d_stopSignal = false;
   d_scorePlayer = 0;
   d_scoreAi = 0;
+
+  setCursorToCenter();
+  showWindow();
 }
 
 void App::dispose()
@@ -93,12 +97,6 @@ void App::mainloop()
 }
 
 
-void App::createWindow()
-{
-  d_window = std::make_unique<Sdk::Window>(WindowWidth, WindowHeight, ApplicationName);
-  CONTRACT_ENSURE(d_window);
-}
-
 void App::showWindow()
 {
   CONTRACT_EXPECT(d_window);
@@ -122,14 +120,6 @@ bool App::stopMainloop()
 }
 
 
-void App::createInputDevice()
-{
-  CONTRACT_EXPECT(d_window);
-  d_inputDevice = Dx::IInputDevice::create(d_window->getHWnd());
-  CONTRACT_ENSURE(d_inputDevice);
-  setCursorToCenter();
-}
-
 void App::disposeInputDevice()
 {
   CONTRACT_EXPECT(d_inputDevice);
@@ -137,24 +127,12 @@ void App::disposeInputDevice()
 }
 
 
-void App::createRenderDevice()
-{
-  d_renderDevice = Dx::IRenderDevice::create(d_window->getHWnd(), WindowWidth, WindowHeight);
-  CONTRACT_ENSURE(d_renderDevice);
-}
-
 void App::disposeRenderDevice()
 {
   CONTRACT_EXPECT(d_renderDevice);
   d_renderDevice.reset();
 }
 
-
-void App::createResourceController()
-{
-  d_resourceController = Dx::IResourceController::create(ResourceFolder);
-  CONTRACT_ENSURE(d_resourceController);
-}
 
 void App::loadResourceController()
 {
@@ -176,25 +154,11 @@ void App::disposeResourceController()
 }
 
 
-void App::createRenderer2d()
-{
-  CONTRACT_EXPECT(d_renderDevice);
-  CONTRACT_EXPECT(d_resourceController);
-  d_renderer2d = Dx::IRenderer2d::create(*d_renderDevice, *d_resourceController);
-  CONTRACT_ENSURE(d_renderer2d);
-}
-
 void App::disposeRenderer2d()
 {
   d_renderer2d.reset();
 }
 
-
-void App::createModel()
-{
-  d_gameField = std::make_unique<GameField>();
-  CONTRACT_ENSURE(d_gameField);
-}
 
 void App::resetModel()
 {
@@ -210,13 +174,6 @@ void App::disposeModel()
   d_gameField.reset();
 }
 
-
-void App::createViewModel()
-{
-  CONTRACT_EXPECT(d_resourceController);
-  CONTRACT_EXPECT(d_gameField);
-  d_viewModel = std::make_unique<ViewModel>(*d_resourceController, *d_gameField);
-}
 
 void App::resetViewModel()
 {
