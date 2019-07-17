@@ -95,7 +95,7 @@ void App::mainloop()
 
 void App::createWindow()
 {
-  d_window = std::make_shared<Sdk::Window>();
+  d_window = std::make_unique<Sdk::Window>();
   CONTRACT_ENSURE(d_window);
   d_window->create(WindowWidth, WindowHeight, ApplicationName);
 }
@@ -202,7 +202,7 @@ void App::disposeRenderer2d()
 
 void App::createModel()
 {
-  d_gameField = std::make_shared<GameField>();
+  d_gameField = std::make_unique<GameField>();
   CONTRACT_ENSURE(d_gameField);
 }
 
@@ -225,7 +225,7 @@ void App::createViewModel()
 {
   CONTRACT_EXPECT(d_resourceController);
   CONTRACT_EXPECT(d_gameField);
-  d_viewModel = std::make_shared<ViewModel>(*d_resourceController, *d_gameField);
+  d_viewModel = std::make_unique<ViewModel>(*d_resourceController, *d_gameField);
 }
 
 void App::resetViewModel()
