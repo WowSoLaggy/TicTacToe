@@ -95,9 +95,8 @@ void App::mainloop()
 
 void App::createWindow()
 {
-  d_window = std::make_unique<Sdk::Window>();
+  d_window = std::make_unique<Sdk::Window>(WindowWidth, WindowHeight, ApplicationName);
   CONTRACT_ENSURE(d_window);
-  d_window->create(WindowWidth, WindowHeight, ApplicationName);
 }
 
 void App::showWindow()
