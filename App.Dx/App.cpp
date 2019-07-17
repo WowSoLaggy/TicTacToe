@@ -146,7 +146,6 @@ void App::createRenderDevice()
 void App::disposeRenderDevice()
 {
   CONTRACT_EXPECT(d_renderDevice);
-  d_renderDevice->dispose();
   d_renderDevice.reset();
 }
 
