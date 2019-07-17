@@ -20,7 +20,6 @@ void App::run()
 {
   initialize();
   mainloop();
-  dispose();
 }
 
 
@@ -31,9 +30,7 @@ void App::initialize()
   d_window = std::make_unique<Sdk::Window>(WindowWidth, WindowHeight, ApplicationName);
   d_renderDevice = Dx::IRenderDevice::create(d_window->getHWnd(), WindowWidth, WindowHeight);
   d_resourceController = Dx::IResourceController::create(ResourceFolder);
-
-  loadResourceController();
-  
+  d_resourceController->loadResources(*d_renderDevice);
   d_renderer2d = Dx::IRenderer2d::create(*d_renderDevice, *d_resourceController);
   d_inputDevice = Dx::IInputDevice::create(d_window->getHWnd());
 
@@ -51,10 +48,6 @@ void App::initialize()
   d_window->show();
 }
 
-void App::dispose()
-{
-  unloadResourceController();
-}
 
 void App::mainloop()
 {
@@ -95,20 +88,6 @@ bool App::stopMainloop()
     return true;
 
   return d_stopSignal;
-}
-
-
-void App::loadResourceController()
-{
-  CONTRACT_EXPECT(d_renderDevice);
-  CONTRACT_EXPECT(d_resourceController);
-  d_resourceController->loadResources(*d_renderDevice);
-}
-
-void App::unloadResourceController()
-{
-  CONTRACT_EXPECT(d_resourceController);
-  d_resourceController->unloadResources();
 }
 
 

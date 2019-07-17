@@ -38,7 +38,6 @@ private:
 
   void initialize();
   void mainloop();
-  void dispose();
 
   std::unique_ptr<Sdk::Window> d_window;
 
@@ -49,8 +48,6 @@ private:
   std::unique_ptr<Dx::IRenderDevice> d_renderDevice;
 
   std::unique_ptr<Dx::IResourceController> d_resourceController;
-  void loadResourceController();
-  void unloadResourceController();
 
   std::unique_ptr<Dx::IRenderer2d> d_renderer2d;
 
