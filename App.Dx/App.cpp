@@ -48,21 +48,12 @@ void App::initialize()
   d_scoreAi = 0;
 
   setCursorToCenter();
-  showWindow();
+  d_window->show();
 }
 
 void App::dispose()
 {
-  disposeViewModel();
-
-  disposeModel();
-
-  disposeInputDevice();
-  disposeRenderer2d();
   unloadResourceController();
-  disposeResourceController();
-  disposeRenderDevice();
-  disposeWindow();
 }
 
 void App::mainloop()
@@ -97,19 +88,6 @@ void App::mainloop()
 }
 
 
-void App::showWindow()
-{
-  CONTRACT_EXPECT(d_window);
-  d_window->show();
-}
-
-void App::disposeWindow()
-{
-  CONTRACT_EXPECT(d_window);
-  d_window.reset();
-}
-
-
 bool App::stopMainloop()
 {
   CONTRACT_EXPECT(d_inputDevice);
@@ -117,20 +95,6 @@ bool App::stopMainloop()
     return true;
 
   return d_stopSignal;
-}
-
-
-void App::disposeInputDevice()
-{
-  CONTRACT_EXPECT(d_inputDevice);
-  d_inputDevice.reset();
-}
-
-
-void App::disposeRenderDevice()
-{
-  CONTRACT_EXPECT(d_renderDevice);
-  d_renderDevice.reset();
 }
 
 
@@ -147,18 +111,6 @@ void App::unloadResourceController()
   d_resourceController->unloadResources();
 }
 
-void App::disposeResourceController()
-{
-  CONTRACT_EXPECT(d_resourceController);
-  d_resourceController.reset();
-}
-
-
-void App::disposeRenderer2d()
-{
-  d_renderer2d.reset();
-}
-
 
 void App::resetModel()
 {
@@ -169,11 +121,6 @@ void App::resetModel()
   d_winState = WinState::NoWinner;
 }
 
-void App::disposeModel()
-{
-  d_gameField.reset();
-}
-
 
 void App::resetViewModel()
 {
@@ -181,11 +128,6 @@ void App::resetViewModel()
   d_viewModel->setTurn(d_isPlayerTurn);
   d_viewModel->setWinState(d_winState);
   d_viewModel->setScore(d_scorePlayer, d_scoreAi);
-}
-
-void App::disposeViewModel()
-{
-  d_viewModel.reset();
 }
 
 
