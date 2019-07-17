@@ -44,38 +44,36 @@ App::App()
 
 void App::run()
 {
-  mainloop();
+  d_timer.start();
+
+  while (!stopMainloop())
+    mainloop();
 }
 
 
 void App::mainloop()
 {
-  d_timer.start();
+  double dt = d_timer.restart();
 
-  while (!stopMainloop())
-  {
-    double dt = d_timer.restart();
+  CONTRACT_EXPECT(d_inputDevice);
+  CONTRACT_EXPECT(d_renderDevice);
+  CONTRACT_EXPECT(d_renderer2d);
 
-    CONTRACT_EXPECT(d_inputDevice);
-    CONTRACT_EXPECT(d_renderDevice);
-    CONTRACT_EXPECT(d_renderer2d);
+  const auto& keyboardState = d_inputDevice->checkKeyboard();
+  handleKeyboard(keyboardState);
+  const auto& mouseState = d_inputDevice->checkMouse();
+  handleMouse(mouseState);
 
-    const auto& keyboardState = d_inputDevice->checkKeyboard();
-    handleKeyboard(keyboardState);
-    const auto& mouseState = d_inputDevice->checkMouse();
-    handleMouse(mouseState);
+  checkLogic(dt);
 
-    checkLogic(dt);
+  d_renderDevice->beginScene();
+  d_renderer2d->beginScene();
 
-    d_renderDevice->beginScene();
-    d_renderer2d->beginScene();
+  d_viewModel->render(*d_renderer2d, mouseState.getMousePosition());
+  std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
-    d_viewModel->render(*d_renderer2d, mouseState.getMousePosition());
-    std::this_thread::sleep_for(std::chrono::milliseconds(10));
-
-    d_renderer2d->endScene();
-    d_renderDevice->endScene();
-  }
+  d_renderer2d->endScene();
+  d_renderDevice->endScene();
 }
 
 
