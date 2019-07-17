@@ -133,7 +133,6 @@ void App::createInputDevice()
 void App::disposeInputDevice()
 {
   CONTRACT_EXPECT(d_inputDevice);
-  d_inputDevice->dispose();
   d_inputDevice.reset();
 }
 
