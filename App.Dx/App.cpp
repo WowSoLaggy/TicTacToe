@@ -108,7 +108,6 @@ void App::showWindow()
 void App::disposeWindow()
 {
   CONTRACT_EXPECT(d_window);
-  d_window->dispose();
   d_window.reset();
 }
 
