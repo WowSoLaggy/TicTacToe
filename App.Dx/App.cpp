@@ -152,9 +152,8 @@ void App::disposeRenderDevice()
 
 void App::createResourceController()
 {
-  d_resourceController = Dx::IResourceController::create();
+  d_resourceController = Dx::IResourceController::create(ResourceFolder);
   CONTRACT_ENSURE(d_resourceController);
-  d_resourceController->initialize(ResourceFolder);
 }
 
 void App::loadResourceController()
