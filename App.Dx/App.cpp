@@ -172,7 +172,6 @@ void App::unloadResourceController()
 void App::disposeResourceController()
 {
   CONTRACT_EXPECT(d_resourceController);
-  d_resourceController->dispose();
   d_resourceController.reset();
 }
 
