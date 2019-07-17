@@ -124,9 +124,9 @@ bool App::stopMainloop()
 
 void App::createInputDevice()
 {
-  d_inputDevice = Dx::IInputDevice::create();
+  CONTRACT_EXPECT(d_window);
+  d_inputDevice = Dx::IInputDevice::create(d_window->getHWnd());
   CONTRACT_ENSURE(d_inputDevice);
-  d_inputDevice->initialize(d_window->getHWnd());
   setCursorToCenter();
 }
 
