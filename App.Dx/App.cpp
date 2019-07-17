@@ -55,10 +55,6 @@ void App::mainloop()
 {
   double dt = d_timer.restart();
 
-  CONTRACT_EXPECT(d_inputDevice);
-  CONTRACT_EXPECT(d_renderDevice);
-  CONTRACT_EXPECT(d_renderer2d);
-
   const auto& keyboardState = d_inputDevice->checkKeyboard();
   handleKeyboard(keyboardState);
   const auto& mouseState = d_inputDevice->checkMouse();
