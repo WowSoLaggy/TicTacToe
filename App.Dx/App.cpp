@@ -139,11 +139,8 @@ void App::disposeInputDevice()
 
 void App::createRenderDevice()
 {
-  d_renderDevice = Dx::IRenderDevice::create();
+  d_renderDevice = Dx::IRenderDevice::create(d_window->getHWnd(), WindowWidth, WindowHeight);
   CONTRACT_ENSURE(d_renderDevice);
-
-  d_renderDevice->initialize(d_window->getHWnd(), WindowWidth, WindowHeight);
-  CONTRACT_ENSURE(d_renderDevice->isInitialized());
 }
 
 void App::disposeRenderDevice()
@@ -164,7 +161,6 @@ void App::createResourceController()
 void App::loadResourceController()
 {
   CONTRACT_EXPECT(d_renderDevice);
-  CONTRACT_EXPECT(d_renderDevice->isInitialized());
   CONTRACT_EXPECT(d_resourceController);
   d_resourceController->loadResources(*d_renderDevice);
 }
