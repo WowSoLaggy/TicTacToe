@@ -16,9 +16,12 @@
 class App
 {
 public:
+  App();
   void run();
 
 private:
+  // GAME LOGIC
+
   bool d_isPlayerTurn;
   int d_scorePlayer;
   int d_scoreAi;
@@ -31,30 +34,25 @@ private:
   void checkVictory();
   void startNewGame();
 
+  // NOT GAME LOGIC
+
   Sdk::Timer d_timer;
+  std::unique_ptr<Sdk::Window> d_window;
+  std::unique_ptr<Dx::IInputDevice> d_inputDevice;
+  std::unique_ptr<Dx::IRenderDevice> d_renderDevice;
+  std::unique_ptr<Dx::IResourceController> d_resourceController;
+  std::unique_ptr<Dx::IRenderer2d> d_renderer2d;
+  std::unique_ptr<GameField> d_gameField;
+  std::unique_ptr<ViewModel> d_viewModel;
 
   bool d_stopSignal;
-  bool stopMainloop();
-
-  void initialize();
   void mainloop();
-
-  std::unique_ptr<Sdk::Window> d_window;
-
-  std::unique_ptr<Dx::IInputDevice> d_inputDevice;
+  bool stopMainloop();
+  
   void handleKeyboard(const Dx::KeyboardState& i_keyboardState);
   void handleMouse(const Dx::MouseState& i_mouseState);
-
-  std::unique_ptr<Dx::IRenderDevice> d_renderDevice;
-
-  std::unique_ptr<Dx::IResourceController> d_resourceController;
-
-  std::unique_ptr<Dx::IRenderer2d> d_renderer2d;
-
-  std::unique_ptr<GameField> d_gameField;
+  
   void resetModel();
-
-  std::unique_ptr<ViewModel> d_viewModel;
   void resetViewModel();
 
   void setCursorToCenter();

@@ -16,14 +16,7 @@
 #include <LaggySdk/Window.h>
 
 
-void App::run()
-{
-  initialize();
-  mainloop();
-}
-
-
-void App::initialize()
+App::App()
 {
   Sdk::randomize();
 
@@ -46,6 +39,12 @@ void App::initialize()
 
   setCursorToCenter();
   d_window->show();
+}
+
+
+void App::run()
+{
+  mainloop();
 }
 
 
