@@ -51,11 +51,10 @@ void App::run()
 void App::mainloop()
 {
   d_timer.start();
-  double dt = 0;
 
   while (!stopMainloop())
   {
-    dt = d_timer.restart();
+    double dt = d_timer.restart();
 
     CONTRACT_EXPECT(d_inputDevice);
     CONTRACT_EXPECT(d_renderDevice);
