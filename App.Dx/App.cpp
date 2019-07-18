@@ -32,8 +32,7 @@ App::App()
 
   d_viewModel = std::make_unique<ViewModel>(*d_resourceController, *d_gameField);
   resetViewModel();
-
-  d_stopSignal = false;
+  
   d_scorePlayer = 0;
   d_scoreAi = 0;
 
@@ -44,6 +43,7 @@ App::App()
 
 void App::run()
 {
+  d_stopSignal = false;
   d_timer.start();
 
   while (!stopMainloop())
